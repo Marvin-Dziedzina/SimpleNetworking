@@ -2,33 +2,44 @@ import socket
 import threading
 from datetime import datetime
 import json
+from time import time
 
 
 class Client:
+    """
+    Use this class to set up an client.
+    """
     connected = False
     __disconnectedByCommand = False
 
+    # standart Properties
     encoding = "utf-8"
     disconnectMessage = "!DISCONNECT"
 
-    __recvListener = []
+    # all Listeners
+    __onRecvListener = []
+    __onConnectListener = []
     __serverCloseListener = []
 
     def __init__(self, host: str, port: int = 5000, standartBufferSize: int = 64, messageTerminatorChar: str = "|") -> None:
         self.address = (host, port)
         self.standartBufferSize = standartBufferSize
 
+        # the messageTerminatorChar has to be just one char
         if not len(messageTerminatorChar) == 1:
             raise Exception(
                 "messageTerminatorChar should be one char that dont ever exists in your sended messages!")
 
         self.messageTerminatorChar = messageTerminatorChar
 
-        self.clientSocket = socket.socket()
-
     def connect(self):
+        """
+        Connect to the server.
+        """
         self.__logMessage(f"Connecting to {self.address}...")
 
+        # create socket and connect to server
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientSocket.connect(self.address)
         self.connected = True
 
@@ -37,13 +48,24 @@ class Client:
         threading.Thread(target=self.__handleConnection).start()
 
     def disconnect(self):
+        """
+        Disconnect from the server.
+        """
+        # send the disconnect message and close connection
         self.send(self.disconnectMessage)
         self.__disconnectedByCommand = True
-        self.clientSocket.close()
         self.connected = False
+        t = time()
+        while time() - t < 0.1:
+            pass
+
+        self.clientSocket.close()
         self.__fireDisconnect()
 
     def send(self, message: dict = {}):
+        """
+        Send a dict to the server.
+        """
         if type(message) == dict:
             message = json.dumps(message)
         else:
@@ -59,7 +81,16 @@ class Client:
         self.clientSocket.send(sendLen)
         self.clientSocket.send(msg)
 
+        self.__logMessage("Sended message to server!")
+
     def __handleConnection(self):
+        """
+        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        __handleConnection handles the servers send messages.
+        """
+        # fire the onConnect event
+        self.__fireOnConnect()
+
         while self.connected:
             try:
                 msgLen = ""
@@ -92,6 +123,7 @@ class Client:
 
             self.__logMessage(f"Got message from server!")
 
+            # check system commands
             if msg == self.disconnectMessage:
                 self.connected = False
                 continue
@@ -119,18 +151,38 @@ class Client:
         def onRecv(message):
             # code
         """
-        if func in self.__recvListener:
+        if func in self.__onRecvListener:
             return
 
-        self.__recvListener.append(func)
+        self.__onRecvListener.append(func)
 
     def __fireRecv(self, msg):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS\n
         __fireRecv returns the msg
         """
-        for func in self.__recvListener:
+        for func in self.__onRecvListener:
             threading.Thread(target=func, args=[msg]).start()
+
+    def onConnect(self, func):
+        """
+        Fire when the client connects to a server.\n
+        @Client.onConnect\n
+        def onConnect():
+            # code
+        """
+        if func in self.__onConnectListener:
+            return
+
+        self.__onConnectListener.append(func)
+
+    def __fireOnConnect(self):
+        """
+        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        __fireOnConnect fires after you connect to a server.
+        """
+        for func in self.__onConnectListener:
+            threading.Thread(target=func).start()
 
     def onDisconnect(self, func):
         """
@@ -145,13 +197,17 @@ class Client:
         self.__serverCloseListener.append(func)
 
     def __fireDisconnect(self):
+        """
+        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        __fireDisconnect fires when you get diconnected or disconnect from the server.
+        """
         for func in self.__serverCloseListener:
-            threading.Thread(target=func).start()
+            func()
 
     def __logMessage(self, msg):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
-        __debugMessage print a debug message.
+        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        __logMessage print a log message.
         """
         now = datetime.now()
         currTime = now.strftime("%Y-%m-%d, %H:%M:%S")
