@@ -39,7 +39,7 @@ while client.connected:
     client.send(playerPos)
 
     startTime = time()
-    while time() - startTime < 8:
+    while time() - startTime < 3:
         pass
 
     client.disconnect()

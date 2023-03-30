@@ -56,7 +56,7 @@ class Client:
         self.__disconnectedByCommand = True
         self.connected = False
         t = time()
-        while time() - t < 0.1:
+        while time() - t < 0.05:
             pass
 
         self.clientSocket.close()
