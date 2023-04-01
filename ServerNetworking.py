@@ -213,7 +213,7 @@ class Server:
         """
         This decorator returns every received message.\n
         @Server.onRecv\n
-        def onRecv(message):
+        def onRecv(message, address):
             # code
         """
         if func in self.__recvListener:
@@ -233,7 +233,7 @@ class Server:
         """
         This decorator calls the function when a client connects.\n
         @Server.onConnect\n
-        def onConnect():
+        def onConnect(address):
             # code
         """
         if func in self.__onConnectListener:
@@ -253,7 +253,7 @@ class Server:
         """
         This decorator calls the function when a client disconnects.\n
         @Server.onDisconnect\n
-        def onDisconnect():
+        def onDisconnect(address):
             # code
         """
         if func in self.__onDisconnectListener:
