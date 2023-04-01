@@ -66,7 +66,7 @@ class Server:
         self.serverActive = False
 
         t = time()
-        while time() - t < 0.05:
+        while time() - t < 3:
             pass
 
         self.serverSocket.close()
@@ -199,7 +199,7 @@ class Server:
                     f"Message from {address[0]} could not be handled!\n{msg}")
                 continue
 
-            self.__fireOnRecv(address, msg)
+            self.__fireOnRecv(msg, address)
 
         connection.close()
         self.__fireOnDisconnect(address)

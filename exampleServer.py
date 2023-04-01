@@ -12,6 +12,7 @@ def onRecv(msg, address):
     global gotMsg
     gotMsg = True
     print(msg)
+    print(address)
 
 
 @server.onConnect
