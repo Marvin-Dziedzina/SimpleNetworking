@@ -34,18 +34,24 @@ class Client:
 
     def connect(self):
         """
-        Connect to the server.
+        Connect to the server.\n
+        Return bool if client is connected to server.
         """
         self.__logMessage(f"Connecting to {self.address}...")
 
         # create socket and connect to server
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientSocket.connect(self.address)
+        try:
+            self.clientSocket.connect(self.address)
+        except:
+            return False
+
         self.connected = True
 
         self.__logMessage(f"Connected to {self.address}!")
 
         threading.Thread(target=self.__handleConnection).start()
+        return True
 
     def disconnect(self):
         """

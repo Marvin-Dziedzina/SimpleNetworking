@@ -44,18 +44,24 @@ class Server:
     def start(self) -> None:
         """
         Start the server instance so that clients can join.
+        Return bool if server is started.
         """
         self.__logMessage("Server is starting...")
 
         # create the socket and make it ready to connect to
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.serverSocket.bind(self.address)
-        self.serverSocket.listen(self.maxClients)
+        try:
+            self.serverSocket.bind(self.address)
+            self.serverSocket.listen(self.maxClients)
+
+        except:
+            return False
 
         self.serverActive = True
 
         self.__logMessage(f"Server is listening on {self.address}")
         threading.Thread(target=self.__handleNewConnections).start()
+        return True
 
     def stop(self):
         """
