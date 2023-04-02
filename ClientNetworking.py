@@ -34,7 +34,8 @@ class Client:
 
     def connect(self):
         """
-        Connect to the server.\n
+        Connect to the server.
+
         Return bool if client is connected to server.
         """
         self.__logMessage(f"Connecting to {self.address}...")
@@ -92,7 +93,8 @@ class Client:
 
     def __handleConnection(self):
         """
-        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS
+        -----
         __handleConnection handles the servers send messages.
         """
         # fire the onConnect event
@@ -153,8 +155,10 @@ class Client:
     # decorators
     def onRecv(self, func):
         """
-        This decorator returns every received message.\n
-        @Client.onRecv\n
+        This decorator returns every received message.
+
+        @Client.onRecv
+
         def onRecv(message):
             # code
         """
@@ -165,7 +169,8 @@ class Client:
 
     def __fireRecv(self, msg):
         """
-        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS
+        -----
         __fireRecv returns the msg
         """
         for func in self.__onRecvListener:
@@ -173,8 +178,10 @@ class Client:
 
     def onConnect(self, func):
         """
-        Fire when the client connects to a server.\n
-        @Client.onConnect\n
+        Fire when the client connects to a server.
+
+        @Client.onConnect
+
         def onConnect():
             # code
         """
@@ -185,7 +192,8 @@ class Client:
 
     def __fireOnConnect(self):
         """
-        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS
+        -----
         __fireOnConnect fires after you connect to a server.
         """
         for func in self.__onConnectListener:
@@ -193,8 +201,10 @@ class Client:
 
     def onDisconnect(self, func):
         """
-        Fire when the client disconnects from the server or gets disconnected.\n
-        @Client.onDisconnect\n
+        Fire when the client disconnects from the server or gets disconnected.
+
+        @Client.onDisconnect
+
         def onDisconnect():
             # code
         """
@@ -205,7 +215,8 @@ class Client:
 
     def __fireDisconnect(self):
         """
-        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS
+        -----
         __fireDisconnect fires when you get diconnected or disconnect from the server.
         """
         for func in self.__serverCloseListener:
@@ -213,7 +224,8 @@ class Client:
 
     def __logMessage(self, msg):
         """
-        DO NOT USE OUTSIDE OF CLIENT CLASS\n
+        DO NOT USE OUTSIDE OF CLIENT CLASS
+        -----
         __logMessage print a log message.
         """
         now = datetime.now()

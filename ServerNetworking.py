@@ -44,6 +44,7 @@ class Server:
     def start(self) -> None:
         """
         Start the server instance so that clients can join.
+
         Return bool if server is started.
         """
         self.__logMessage("Server is starting...")
@@ -80,8 +81,10 @@ class Server:
 
     def send(self, message: dict = {}, clients: list = []):
         """
-        Send a dict to the clients.\n
-        message should be a dict.\n
+        Send a dict to the clients.
+
+        message should be a dict.
+
         clients is a list of addresses to send the data. When empty then send to all clients.
         """
         # get the clients the message should be send to
@@ -130,7 +133,8 @@ class Server:
 
     def __handleNewConnections(self):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __handleNewConnections wait for an incoming connection.
         """
         while self.serverActive:
@@ -144,7 +148,8 @@ class Server:
 
     def __handleClient(self, connection: socket.socket, address):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __handleClient handle the client.
         """
         # add the client to the list
@@ -218,11 +223,13 @@ class Server:
     #
     def onRecv(self, func):
         """
-        This decorator returns every received message.\n
-        @Server.onRecv\n
+        This decorator returns every received message.
+
+        @Server.onRecv
+
         def onRecv(message, address):
             # code
-        """
+            """
         if func in self.__recvListener:
             return
 
@@ -230,7 +237,8 @@ class Server:
 
     def __fireOnRecv(self, msg: dict, address: tuple | None = None):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __fireRecv calls every function that used the onRecv decorator and gives the msg as an argument.
         """
         for func in self.__recvListener:
@@ -238,8 +246,10 @@ class Server:
 
     def onConnect(self, func):
         """
-        This decorator calls the function when a client connects.\n
-        @Server.onConnect\n
+        This decorator calls the function when a client connects.
+
+        @Server.onConnect
+
         def onConnect(address):
             # code
         """
@@ -250,7 +260,8 @@ class Server:
 
     def __fireOnConnect(self, address: tuple):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __fireOnConnect calls every function that uses the onConnect decorator.
         """
         for func in self.__onConnectListener:
@@ -258,8 +269,10 @@ class Server:
 
     def onDisconnect(self, func):
         """
-        This decorator calls the function when a client disconnects.\n
-        @Server.onDisconnect\n
+        This decorator calls the function when a client disconnects.
+
+        @Server.onDisconnect
+
         def onDisconnect(address):
             # code
         """
@@ -270,7 +283,8 @@ class Server:
 
     def __fireOnDisconnect(self, address: tuple):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __fireOnDisconnect calls every function that uses the onDisconnect decorator.
         """
         for func in self.__onDisconnectListener:
@@ -278,7 +292,8 @@ class Server:
 
     def __logMessage(self, msg):
         """
-        DO NOT USE OUTSIDE OF SERVER CLASS\n
+        DO NOT USE OUTSIDE OF SERVER CLASS
+        -----
         __logMessage print a log message.
         """
         now = datetime.now()
