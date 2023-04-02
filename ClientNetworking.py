@@ -67,6 +67,7 @@ class Client:
 
         self.clientSocket.close()
         self.__fireDisconnect()
+        self.__logMessage(f"Disconnected from {self.address}")
 
     def send(self, message: dict = {}):
         """

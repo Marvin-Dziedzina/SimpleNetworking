@@ -59,8 +59,8 @@ class Server:
 
         self.serverActive = True
 
-        self.__logMessage(f"Server is listening on {self.address}")
         threading.Thread(target=self.__handleNewConnections).start()
+        self.__logMessage(f"Server is listening on {self.address}")
         return True
 
     def stop(self):
@@ -76,6 +76,7 @@ class Server:
             pass
 
         self.serverSocket.close()
+        self.__logMessage("Server is stopped!")
 
     def send(self, message: dict = {}, clients: list = []):
         """
