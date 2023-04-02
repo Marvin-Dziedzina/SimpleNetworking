@@ -80,9 +80,9 @@ class Server:
 
     def send(self, message: dict = {}, clients: list = []):
         """
-        Send a dict to the clients.
-        message should be a dict
-        clients a list of addresses to send the data
+        Send a dict to the clients.\n
+        message should be a dict.\n
+        clients is a list of addresses to send the data. When empty then send to all clients.
         """
         # get the clients the message should be send to
         clientsToSend = []
