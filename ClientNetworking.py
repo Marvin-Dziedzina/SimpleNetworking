@@ -44,6 +44,7 @@ class Client:
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.clientSocket.connect(self.address)
+
         except:
             return False
 
