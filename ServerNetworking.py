@@ -87,6 +87,9 @@ class Server:
 
         clients is a list of addresses to send the data. When empty then send to all clients.
         """
+        if len(self.connectedClients) == 0:
+            return
+
         # get the clients the message should be send to
         clientsToSend = []
         connectedClients = dict(self.connectedClients)
