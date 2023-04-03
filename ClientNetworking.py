@@ -160,7 +160,7 @@ class Client:
 
         @Client.onRecv
 
-        def onRecv(message):
+        def onRecv(message: dict):
             # code
         """
         if func in self.__onRecvListener:

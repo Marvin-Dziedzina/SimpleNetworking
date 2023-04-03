@@ -227,7 +227,7 @@ class Server:
 
         @Server.onRecv
 
-        def onRecv(message, address):
+        def onRecv(message: dict, address: tuple):
             # code
             """
         if func in self.__recvListener:
@@ -250,7 +250,7 @@ class Server:
 
         @Server.onConnect
 
-        def onConnect(address):
+        def onConnect(address: tuple):
             # code
         """
         if func in self.__onConnectListener:
@@ -273,7 +273,7 @@ class Server:
 
         @Server.onDisconnect
 
-        def onDisconnect(address):
+        def onDisconnect(address: tuple):
             # code
         """
         if func in self.__onDisconnectListener:
