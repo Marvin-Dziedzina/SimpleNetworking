@@ -7,7 +7,7 @@ from time import time
 
 class Server:
     """
-    Use this class to set up an server.
+    The server class.
     """
     serverActive = False
 
@@ -29,7 +29,7 @@ class Server:
     __onConnectListener = []
     __onDisconnectListener = []
 
-    def __init__(self, host: str = socket.gethostbyname(socket.gethostname()), port: int = 5000, maxClients: int = 1, standartBufferSize: int = 64, messageTerminatorChar: str = "|") -> None:
+    def __init__(self, host: str = socket.gethostbyname(socket.gethostname()), port: int = 5000, maxClients: int = 1, standartBufferSize: int = 64, messageTerminatorChar: str = "|"):
         # the messageTerminatorChar has to be just one char long
         if not len(messageTerminatorChar) == 1:
             raise Exception(
@@ -41,11 +41,11 @@ class Server:
 
         self.messageTerminatorChar = messageTerminatorChar
 
-    def start(self) -> None:
+    def start(self) -> bool:
         """
         Start the server instance so that clients can join.
 
-        Return bool if server is started.
+        Return true if server started successfully.
         """
         self.__logMessage("Server is starting...")
 

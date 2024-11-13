@@ -7,7 +7,7 @@ from time import time
 
 class Client:
     """
-    Use this class to set up an client.
+    The Client class.
     """
     connected = False
     __disconnectedByCommand = False
@@ -21,7 +21,7 @@ class Client:
     __onConnectListener = []
     __serverCloseListener = []
 
-    def __init__(self, host: str, port: int = 5000, standartBufferSize: int = 64, messageTerminatorChar: str = "|") -> None:
+    def __init__(self, host: str, port: int = 5000, standartBufferSize: int = 64, messageTerminatorChar: str = "\n"):
         self.address = (host, port)
         self.standartBufferSize = standartBufferSize
 
@@ -32,11 +32,11 @@ class Client:
 
         self.messageTerminatorChar = messageTerminatorChar
 
-    def connect(self):
+    def connect(self) -> bool:
         """
         Connect to the server.
 
-        Return bool if client is connected to server.
+        Returns a bool that represents the success of the connection.
         """
         self.__logMessage(f"Connecting to {self.address}...")
 
